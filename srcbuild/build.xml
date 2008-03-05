@@ -1,0 +1,328 @@
+﻿<?xml version="1.0"?>
+
+<!-- 
+    Librepos is a point of sales application designed for touch screens.
+    Copyright (C) 2005 Adrián Romero Corchado.
+    http://sourceforge.net/projects/librepos
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ -->
+ 
+<project name="Librepos" basedir="." default="all">
+
+    <!-- ================================================================= -->
+    <!-- P R O P E R T I E S                                               -->
+    <!-- ================================================================= -->
+	
+    <!-- program name -->
+    <property name="name" value="librepos"/>
+
+    <!-- project version -->
+    <property name="version" value="0_0_24"/>
+
+    <!-- read in property files -->
+    <property file="build.properties" />
+
+    <property name="librepos.pos.src" value="${basedir}/../srcpos"/>
+    <property name="librepos.data.src" value="${basedir}/../srcdata"/>
+    <property name="librepos.beans.src" value="${basedir}/../srcbeans"/>
+    <property name="librepos.erp.src" value="${basedir}/../srcerp"/>
+
+    <property name="librepos.build.src" value="${basedir}/../srcbuild"/>
+	
+    <property name="path.build.l2fprodtasks" value="../../l2fprod-common-7.3"/>
+    <property name="path.build.jasperreports" value="../../jasperreports-2.0.1"/>
+    <property name="path.build.barcode4j" value="../../barcode4j-2.0alpha2"/>
+    <property name="path.build.commonscodec" value="../../commons-codec-1.3"/>
+    <property name="path.build.axis" value="../../axis-1_4"/>
+    <property name="path.build.velocity" value="../../velocity-1.5"/>
+    <property name="path.build.javacomm" value="../../commapi"/>
+    <property name="path.build.rxtx" value="../../rxtx-2.1-7-bins-r2"/>
+    <property name="path.build.hsqldb" value="../../hsqldb"/>
+    <property name="path.build.javapos" value="../../JavaPOS"/>
+    <property name="path.build.bsh" value="../../beanshell"/>
+
+	<filelist dir="${basedir}" id="libraries"> 
+		<file name="${path.build.l2fprodtasks}/lib/l2fprod-common-tasks.jar"/>
+		<file name="${path.build.jasperreports}/dist/jasperreports-2.0.1.jar"/>
+		<file name="${path.build.jasperreports}/lib/jcommon-1.0.0.jar"/>
+		<file name="${path.build.jasperreports}/lib/jfreechart-1.0.0.jar"/>
+		<file name="${path.build.jasperreports}/lib/jdt-compiler-3.1.1.jar"/>
+		<file name="${path.build.jasperreports}/lib/commons-beanutils-1.7.jar"/>
+		<file name="${path.build.jasperreports}/lib/commons-digester-1.7.jar"/>
+		<file name="${path.build.jasperreports}/lib/itext-1.3.1.jar"/>
+		<file name="${path.build.jasperreports}/lib/poi-3.0.1-FINAL-20070705.jar"/>
+		<file name="${path.build.barcode4j}/build/barcode4j-light.jar"/>
+		<file name="${path.build.commonscodec}/commons-codec-1.3.jar"/>
+		<file name="${path.build.axis}/lib/axis.jar"/>
+		<file name="${path.build.axis}/lib/jaxrpc.jar"/>
+		<file name="${path.build.axis}/lib/saaj.jar"/>
+		<file name="${path.build.axis}/lib/wsdl4j-1.5.1.jar"/>
+		<file name="${path.build.axis}/lib/commons-discovery-0.2.jar"/>
+		<file name="${path.build.axis}/lib/commons-logging-1.0.4.jar"/>
+		<file name="${path.build.velocity}/velocity-1.5.jar"/>
+		<file name="${path.build.velocity}/lib/oro-2.0.8.jar"/>
+		<file name="${path.build.velocity}/lib/commons-collections-3.1.jar"/>
+		<file name="${path.build.velocity}/lib/commons-lang-2.1.jar"/>
+		<file name="${path.build.javacomm}/comm.jar"/>
+		<file name="${path.build.rxtx}/RXTXcomm.jar"/>
+		<file name="${path.build.javapos}/jpos111.jar"/>
+		<file name="${path.build.bsh}/bsh-core-2.0b4.jar"/>
+	</filelist>
+
+
+    <!-- the destination directory -->
+    <property name="dest.dist" value="${basedir}/dist"/>
+
+    <!-- where the class files go -->
+    <property name="dest.classes" value="${basedir}/classes"/>
+
+    <!-- javac properties -->
+    <property name="javac.deprecation" value="off"/>
+    <property name="javac.optimize" value="on"/>
+    <property name="javac.debug" value="off"/>
+    <property name="javac.minVMVersion" value="1.5"/>
+
+    <!-- ================================================================= -->
+    <!-- I N I T                                                           -->
+    <!-- ================================================================= -->
+
+    <target name="init">
+    </target>
+    
+    <target name="all" depends="clean,zipbin,zipsrc">
+    </target>
+    
+    <!-- ================================================================= -->
+    <!-- C O M P I L E                                                     -->
+    <!-- ================================================================= -->
+
+    <target name="compilebeans" depends="init">
+        <mkdir dir="${dest.classes}/beans" />
+        <javac srcdir="${librepos.beans.src}"
+               destdir="${dest.classes}/beans"
+               debug="${javac.debug}"
+               deprecation="${javac.deprecation}"
+               optimize="${javac.optimize}"
+               target="${javac.minVMVersion}">
+        </javac>
+        <copy todir="${dest.classes}/beans">
+            <fileset dir="${librepos.beans.src}">
+                <exclude name="**/*.java"/>
+                <exclude name="**/*.form"/>
+                <exclude name="**/.nbattrs"/>
+                <exclude name="**/Thumbs.db"/>
+                <exclude name="**/filesystem.attributes"/>
+            </fileset>
+        </copy>                
+    </target>
+
+    <target name="compiledata" depends="init">
+        <mkdir dir="${dest.classes}/data" />
+        <javac srcdir="${librepos.data.src}"
+               destdir="${dest.classes}/data"
+               debug="${javac.debug}"
+               deprecation="${javac.deprecation}"
+               optimize="${javac.optimize}"
+               target="${javac.minVMVersion}">
+            <classpath>
+                <pathelement location="${dest.classes}/beans"/>
+            </classpath>
+		</javac>
+        <copy todir="${dest.classes}/data">
+            <fileset dir="${librepos.data.src}">
+                <exclude name="**/*.java"/>
+                <exclude name="**/*.form"/>
+                <exclude name="**/.nbattrs"/>
+                <exclude name="**/Thumbs.db"/>
+                <exclude name="**/filesystem.attributes"/>
+            </fileset>
+        </copy>                
+    </target>
+
+    <target name="compilepos" depends="init,compilebeans,compiledata">
+        <mkdir dir="${dest.classes}/pos" />
+        <javac srcdir="${librepos.pos.src}"
+               destdir="${dest.classes}/pos"
+               debug="${javac.debug}"
+               deprecation="${javac.deprecation}"
+               optimize="${javac.optimize}"
+               target="${javac.minVMVersion}">
+            <classpath>
+				<filelist refid="libraries"/>
+                <pathelement location="${dest.classes}/beans"/>
+                <pathelement location="${dest.classes}/data"/>
+            </classpath>
+        </javac>
+        <copy todir="${dest.classes}/pos">
+            <fileset dir="${librepos.pos.src}">
+                <exclude name="**/*.java"/>
+                <exclude name="**/*.form"/>
+                <exclude name="**/.nbattrs"/>
+                <exclude name="**/Thumbs.db"/>
+                <exclude name="**/filesystem.attributes"/>
+            </fileset>
+        </copy>                
+    </target>
+
+    <target name="compileerp" depends="init,compilebeans,compiledata,compilepos">
+        <mkdir dir="${dest.classes}/erp" />
+        <javac srcdir="${librepos.erp.src}"
+               destdir="${dest.classes}/erp"
+               debug="${javac.debug}"
+               deprecation="${javac.deprecation}"
+               optimize="${javac.optimize}"
+               target="${javac.minVMVersion}">
+            <classpath>
+				<filelist refid="libraries"/>
+                <pathelement location="${dest.classes}/beans"/>
+                <pathelement location="${dest.classes}/data"/>
+                <pathelement location="${dest.classes}/pos"/>
+            </classpath>
+        </javac>
+        <copy todir="${dest.classes}/erp">
+            <fileset dir="${librepos.erp.src}">
+                <exclude name="**/*.java"/>
+                <exclude name="**/*.form"/>
+                <exclude name="**/.nbattrs"/>
+                <exclude name="**/Thumbs.db"/>
+                <exclude name="**/filesystem.attributes"/>
+            </fileset>
+        </copy>                
+    </target>
+    
+    <!-- ================================================================= -->
+    <!-- J A R                                                             -->
+    <!-- ================================================================= -->
+
+    <target name="jarlibrepos" depends="compilebeans,compiledata,compilepos,compileerp" description="Generate the librepos.jar file.">
+        <copy todir="${dest.classes}/librepos">
+            <fileset dir="${dest.classes}/beans"/>
+            <fileset dir="${dest.classes}/data"/>
+            <fileset dir="${dest.classes}/pos"/>
+            <fileset dir="${dest.classes}/erp"/>
+        </copy>  
+        <mkdir dir="${dest.dist}" />
+        <jar jarfile="${dest.dist}/librepos.jar"
+             compress="true"
+             basedir="${dest.classes}/librepos">
+        </jar>
+    </target>
+    
+    <!-- ================================================================= -->
+    <!-- Z I P                                                             -->
+    <!-- ================================================================= -->
+    
+    <!-- create a zip file -->
+    <target name="zipbin" depends="jarlibrepos" description="Generate the bin zip file.">
+        <mkdir dir="${basedir}/zip" />
+        <copy file="${basedir}/license.txt" todir="${basedir}/zip"/>
+        <copy file="${basedir}/start.bat" todir="${basedir}/zip"/>
+        <copy file="${basedir}/configure.bat" todir="${basedir}/zip"/>
+        <copy file="${basedir}/start.sh" todir="${basedir}/zip"/>
+        <copy file="${basedir}/configure.sh" todir="${basedir}/zip"/>
+        <copy file="${dest.dist}/librepos.jar" todir="${basedir}/zip"/>		
+		
+		<copy file="${path.build.l2fprodtasks}/lib/l2fprod-common-tasks.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.jasperreports}/dist/jasperreports-2.0.1.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.jasperreports}/lib/jcommon-1.0.0.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.jasperreports}/lib/jfreechart-1.0.0.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.jasperreports}/lib/jdt-compiler-3.1.1.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.jasperreports}/lib/commons-beanutils-1.7.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.jasperreports}/lib/commons-digester-1.7.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.jasperreports}/lib/itext-1.3.1.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.jasperreports}/lib/poi-3.0.1-FINAL-20070705.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.barcode4j}/build/barcode4j-light.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.commonscodec}/commons-codec-1.3.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.axis}/lib/axis.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.axis}/lib/jaxrpc.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.axis}/lib/saaj.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.axis}/lib/wsdl4j-1.5.1.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.axis}/lib/commons-discovery-0.2.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.axis}/lib/commons-logging-1.0.4.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.velocity}/velocity-1.5.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.velocity}/lib/oro-2.0.8.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.velocity}/lib/commons-collections-3.1.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.velocity}/lib/commons-lang-2.1.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.javapos}/jpos111.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.bsh}/bsh-core-2.0b4.jar" todir="${basedir}/zip/lib"/>
+
+		<copy file="${path.build.rxtx}/RXTXcomm.jar" todir="${basedir}/zip/lib"/>
+		<copy file="${path.build.rxtx}/Windows/i368-mingw32/rxtxParallel.dll" todir="${basedir}/zip/lib/Windows/i368-mingw32"/>
+		<copy file="${path.build.rxtx}/Windows/i368-mingw32/rxtxSerial.dll" todir="${basedir}/zip/lib/Windows/i368-mingw32"/>
+		<copy file="${path.build.rxtx}/Linux/i686-unknown-linux-gnu/librxtxParallel.so" todir="${basedir}/zip/lib/Linux/i686-unknown-linux-gnu"/>
+		<copy file="${path.build.rxtx}/Linux/i686-unknown-linux-gnu/librxtxSerial.so" todir="${basedir}/zip/lib/Linux/i686-unknown-linux-gnu"/>
+		<copy file="${path.build.rxtx}/Mac_OS_X/librxtxSerial.jnilib" todir="${basedir}/zip/lib/Mac_OS_X"/>
+
+		<copy file="${path.build.hsqldb}/lib/hsqldb.jar" todir="${basedir}/zip/lib"/>
+		
+        <zip zipfile="${dest.dist}/${name}_${version}_bin.zip" basedir="${basedir}/zip" />
+        <delete dir="${basedir}/zip" />
+    </target>            
+    
+    <!-- create a zip file -->
+    <target name="zipsrc" depends="" description="Generate the src zip file.">
+        <mkdir dir="${basedir}/zip" />
+
+        <copy todir="${basedir}/zip/srcbeans">
+            <fileset dir="${librepos.beans.src}">
+                <exclude name="**/.nbattrs"/>
+                <exclude name="**/filesystem.attributes"/>
+            </fileset>
+        </copy>
+        <copy todir="${basedir}/zip/srcdata">
+            <fileset dir="${librepos.data.src}">
+                <exclude name="**/.nbattrs"/>
+                <exclude name="**/Thumbs.db"/>
+                <exclude name="**/filesystem.attributes"/>
+            </fileset>
+        </copy>
+        <copy todir="${basedir}/zip/srcpos">
+            <fileset dir="${librepos.pos.src}">
+                <exclude name="**/.nbattrs"/>
+                <exclude name="**/Thumbs.db"/>
+                <exclude name="**/filesystem.attributes"/>
+            </fileset>
+        </copy>        
+        <copy todir="${basedir}/zip/srcerp">
+            <fileset dir="${librepos.erp.src}">
+                <exclude name="**/.nbattrs"/>
+                <exclude name="**/Thumbs.db"/>
+                <exclude name="**/filesystem.attributes"/>
+            </fileset>
+        </copy>    
+		
+        <copy file="${librepos.build.src}/license.txt" todir="${basedir}/zip/srcbuild" /> 
+        <copy file="${librepos.build.src}/start.bat" todir="${basedir}/zip/srcbuild" /> 
+        <copy file="${librepos.build.src}/configure.bat" todir="${basedir}/zip/srcbuild" /> 
+        <copy file="${librepos.build.src}/start.sh" todir="${basedir}/zip/srcbuild" /> 
+        <copy file="${librepos.build.src}/configure.sh" todir="${basedir}/zip/srcbuild" /> 
+        <copy file="${librepos.build.src}/build.xml" todir="${basedir}/zip/srcbuild" />
+
+        <zip zipfile="${dest.dist}/${name}_${version}_src.zip" basedir="${basedir}/zip" />
+        <delete dir="${basedir}/zip" />
+    </target>     
+             
+    <!-- ================================================================= -->
+    <!-- C L E A N                                                         -->
+    <!-- ================================================================= -->
+
+    <target name="clean" depends="init" description="Clean all build products.">
+        <delete dir="${dest.classes}" />
+        <delete dir="${dest.dist}" />
+        <delete dir="${basedir}/zip" />
+    </target>
+
+</project>

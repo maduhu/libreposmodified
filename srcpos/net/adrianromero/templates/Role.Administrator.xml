@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Librepos is a point of sales application designed for touch screens.
+    Copyright (C) 2005 Adrián Romero Corchado.
+    http://sourceforge.net/projects/librepos
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ -->
+ 
+<permissions>
+    <class name="net.adrianromero.tpv.panelsales.JPanelTicketSales"/>
+    <class name="net.adrianromero.tpv.panelsales.JPanelTicketEdits"/>
+    <class name="org.emar.prepaid.panel.JQueryCard"/>
+    <class name="net.adrianromero.tpv.panels.JPanelPayments"/>
+    <class name="net.adrianromero.tpv.panels.JPanelCloseMoney"/>
+    <class name="net.adrianromero.tpv.reports.JReportClosedPos"/>
+
+    <class name="payment.prepaidcard"/>
+    <class name="payment.cash"/>
+    <class name="payment.cheque"/>
+    <class name="payment.paper"/>
+    <class name="payment.tichet"/>
+    <class name="payment.magcard"/>
+    <class name="payment.free"/>
+    <class name="refund.cash"/>
+    <class name="refund.cheque"/>
+    <class name="refund.paper"/>
+    <class name="refund.magcard"/>
+
+    <class name="Menu.StockManagement"/>
+    <class name="net.adrianromero.tpv.inventory.ProductsPanel"/>
+    <class name="net.adrianromero.tpv.inventory.ProductsWarehousePanel"/>
+    <class name="net.adrianromero.tpv.inventory.CategoriesPanel"/>
+    <class name="net.adrianromero.tpv.panels.JPanelTax"/>
+    <class name="net.adrianromero.tpv.inventory.StockDiaryPanel"/>
+    <class name="net.adrianromero.tpv.inventory.StockManagement"/>
+    <class name="net.adrianromero.tpv.reports.JReportProducts"/>      
+    <class name="net.adrianromero.tpv.reports.JReportCatalog"/>
+    <class name="net.adrianromero.tpv.reports.JReportInventory"/>
+    <class name="net.adrianromero.tpv.reports.JReportInventory2"/>
+    <class name="net.adrianromero.tpv.reports.JReportInventoryBroken"/>
+    <class name="net.adrianromero.tpv.reports.JReportInventoryDiff"/>
+
+    <class name="Menu.SalesManagement"/>
+    <class name="net.adrianromero.tpv.reports.JReportUserSales"/>
+    <class name="net.adrianromero.tpv.reports.JReportClosedProducts"/>
+    <class name="net.adrianromero.tpv.reports.JReportTaxes"/>
+    <class name="net.adrianromero.tpv.reports.JChartSales"/>
+    
+    <!-- class name="Menu.ThirdParties"/ -->
+    <!-- class name="net.adrianromero.tpv.thirdparties.ThirdPartiesPanel"/ -->    
+
+    <class name="Menu.Maintenance"/>
+    <class name="net.adrianromero.tpv.admin.PeoplePanel"/>
+    <class name="net.adrianromero.tpv.admin.RolesPanel"/>
+    <class name="org.emar.prepaid.panel.PanelCliente"/>
+    <class name="org.emar.prepaid.panel.PanelTarjeta"/>
+    <class name="org.emar.prepaid.RecargaMasiva"/>
+    <class name="org.emar.prepaid.reports.JReportSaldos"/>
+    <class name="net.adrianromero.tpv.admin.ResourcesPanel"/>
+    <class name="net.adrianromero.tpv.inventory.LocationsPanel"/>
+    <class name="net.adrianromero.tpv.mant.JPanelFloors"/>
+    <class name="net.adrianromero.tpv.mant.JPanelPlaces"/>
+    <class name="com.openbravo.possync.ProductsSync"/>
+    <class name="com.openbravo.possync.OrdersSync"/>
+
+    <class name="Menu.ChangePassword"/>
+    <class name="net.adrianromero.tpv.panels.JPanelPrinter"/>
+    <class name="net.adrianromero.tpv.config.JPanelConfiguration"/>
+    
+    <class name="button.print"/>
+    <class name="button.opendrawer"/>
+    
+</permissions>
