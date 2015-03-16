@@ -1,0 +1,1 @@
+for the latest release please visit www.openbravo.com
